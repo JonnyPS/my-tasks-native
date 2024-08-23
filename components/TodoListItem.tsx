@@ -2,6 +2,8 @@ import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import { useState } from "react";
+import { useTodo } from "@/context/todoList";
+
 export type TodoListItemProps = {
   name: string;
   id: string;
@@ -20,6 +22,7 @@ export function TodoListItem({
   statusValue,
 }: TodoListItemProps) {
   const [selectedValue, setSelectedValue] = useState();
+  const { handleChange } = useTodo();
 
   const handlePress = () => {
     Alert.alert(
@@ -58,8 +61,9 @@ export function TodoListItem({
         style={styles.itemPicker}
         selectedValue={statusValue}
         onValueChange={(itemValue) => {
+          console.log("itemValue", itemValue);
           setSelectedValue(itemValue);
-          onChange!(itemValue as unknown as string);
+          handleChange(id, itemValue as unknown as StatusValueProps);
         }}
       >
         <Picker.Item label="Not started" value="Not started" />
