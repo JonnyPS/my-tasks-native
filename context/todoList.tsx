@@ -7,6 +7,7 @@ import {
 } from "react";
 import { getFromStorage, saveToStorage } from "@/utils/storage";
 import { TodoListItemProps, StatusValueProps } from "@/components/TodoListItem";
+import { Alert, ToastAndroid } from "react-native";
 
 interface TodoContextType {
   todoList: TodoListItemProps[];
@@ -40,6 +41,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 
   const handleDelete = (id: string) => {
     console.log("handleDelete");
+    ToastAndroid.show("Task has now been deleted", ToastAndroid.SHORT);
     const newTodoList = todoList.filter((item) => item.id !== id);
     setTodoList(newTodoList);
     saveToStorage("todo-list", newTodoList);
@@ -61,12 +63,18 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
 
   const handleChange = (id: string, value: StatusValueProps) => {
     console.log("handleChange", id + " " + value);
+    ToastAndroid.show(
+      `Task has now been moved to the '${value}' tab`,
+      ToastAndroid.SHORT
+    );
+
     const updatedTodoList = todoList.map((item) => {
       if (item.id === id) {
         return { ...item, statusValue: value };
       }
       return item;
     });
+
     console.log("updatedTodoList", updatedTodoList);
     setTodoList(updatedTodoList as TodoListItemProps[]);
     saveToStorage("todo-list", updatedTodoList);
