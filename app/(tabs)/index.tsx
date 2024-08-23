@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { NotStarted } from "./notStarted";
-import { ReactElement, JSXElementConstructor } from "react";
 
 export default function HomeScreen() {
   return (

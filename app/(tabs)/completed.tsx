@@ -1,4 +1,4 @@
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
 import { useState } from "react";
 import { TodoListItem } from "@/components/TodoListItem";
 import { useFocusEffect } from "@react-navigation/native";
@@ -9,6 +9,7 @@ import type {
 } from "@/components/TodoListItem";
 
 import { useTodo } from "@/context/todoList";
+import { NoTasks } from "@/components/NoTasks";
 
 export default function InProgress() {
   const { todoList, handleDelete, handleChange } = useTodo();
@@ -27,7 +28,7 @@ export default function InProgress() {
   );
 
   if (completedTodoList!.length === 0) {
-    return <Text>No tasks in 'Completed'</Text>; // Or any other component/message you want to render
+    return <NoTasks statusValue={"Completed"} />;
   }
 
   return (
